@@ -1,0 +1,18 @@
+<!--
+Component HTML
+@author Ludovic Dupont
+-->
+
+<div class="container">
+	<h1 class="app-heading">
+		{{title}}
+	</h1>
+	<div class="row">
+		<div class="col-md-8">
+			<app-bookmark-list [editData]="editData" [reset]="reset" [showList]="showList"></app-bookmark-list>
+		</div>
+		<div class="col-md-4">
+			<app-add-bookmark [editData]="editData" [reset]="reset" [showList]="showList"></app-add-bookmark>
+		</div>
+	</div>
+</div>

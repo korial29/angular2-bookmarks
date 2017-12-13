@@ -1,0 +1,63 @@
+<!--
+List bookmarks HTML
+@author Ludovic Dupont
+-->
+
+<div class="title">
+	<div class="row">
+		<div class="col-sm-6">
+			<h2>Liste des bookmarks</h2>
+		</div>
+		<div class="col-sm-6">
+			<a (click)="addBookmark()" class="btn btn-success" data-toggle="modal">
+				<i class="glyphicon glyphicon-plus"></i> <span>Ajouter un bookmark</span>
+			</a>
+		</div>
+	</div>
+</div>
+
+<table class="table table-striped table-hover" [mfData]="bookmarks" #mf="mfDataTable" [mfRowsOnPage]="5">
+	<thead>
+		<tr>
+			<th>
+				<mfDefaultSorter by="data.title">Titre</mfDefaultSorter>
+			</th>
+			<th style="width:30%">
+				<mfDefaultSorter by="data.url">URL</mfDefaultSorter>
+			</th>
+			<th>
+				<mfDefaultSorter by="data.authorName">Auteur</mfDefaultSorter>
+			</th>
+			<th>
+				<mfDefaultSorter by="data.addDate">Date d'ajout</mfDefaultSorter>
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let item of mf.data">
+			<td>{{item.data.title}}</td>
+			<td>
+				<span *ngIf="item.data.type=='v'">https://vimeo.com/{{item.data.url}}</span>
+				<span *ngIf="item.data.type=='p'">https://www.flickr.com/{{item.data.url}}</span>
+			</td>
+			<td>{{item.data.authorName}}</td>
+			<td>{{item.data.addDate | date: 'dd/MM/yyyy'}}</td>
+			<td>
+				<a (click)="editBookmark(item)" class="edit" data-original-title="Editer">
+					<small><i class="glyphicon glyphicon-pencil" data-toggle="tooltip"></i></small>
+				</a>
+				<a (click)="deleteBookmarks(item.data._id)" class="delete" data-original-title="Supprimer">
+					<small><i class="glyphicon glyphicon-trash" data-toggle="tooltip"></i></small>
+				</a>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="4">
+				<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+			</td>
+		</tr>
+	</tfoot>
+</table>

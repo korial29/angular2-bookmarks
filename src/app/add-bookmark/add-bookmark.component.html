@@ -1,0 +1,53 @@
+<!--
+Add bookmark html
+@author Ludovic Dupont
+-->
+<form validate [formGroup]="editForm">
+	<div class="title">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2 *ngIf="isInsert">Ajouter un bookmark</h2>
+				<h2 *ngIf="!isInsert">Editer un bookmark</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Type</label>
+		<select class="form-control" (change)="changeType(type.value)" #type name="type" formControlName="type" [formControl]="editForm.controls['type']" required>
+			<option value='v'> Vidéo </option>
+			<option value='p'> Photo </option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label>URL</label>
+		<div class="input-group">
+			<span *ngIf="bookmarkModel.data.type=='v'" class="input-group-addon" id="basic-addon3">https://vimeo.com/</span>
+			<span *ngIf="bookmarkModel.data.type=='p'" class="input-group-addon" id="basic-addon3">https://www.flickr.com/</span>
+			<input type="text" class="form-control" placeholder="Entrez une url" name="url" [(ngModel)]="bookmarkModel.data.url" formControlName="url" aria-describedby="basic-addon3" [formControl]="editForm.controls['url']" required>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>Titre</label>
+		<input class="form-control" type="text" placeholder="Entrez un titre" name="title" [(ngModel)]="bookmarkModel.data.title" formControlName="title" [formControl]="editForm.controls['title']" required>
+	</div>
+
+	<div class="form-group">
+		<label>Auteur</label>
+		<input class="form-control" type="text" placeholder="Entrez un auteur" name="authorName" [(ngModel)]="bookmarkModel.data.authorName" formControlName="authorName">
+	</div>
+
+	<template ad-host></template>
+
+	<div class="form-group">
+		<label>Tags</label>
+		<rl-tag-input formControlName="tags" placeholder="Entrez un tag" [(ngModel)]="bookmarkModel.data.tags" formControlName="tags"></rl-tag-input>
+	</div>
+
+	<div class="form-group">
+		<button *ngIf="isInsert" class="btn btn-success" (click)="addBookmark()" [disabled]="!editForm.valid" >Ajouter</button>
+		<button *ngIf="!isInsert" class="btn btn-warning" (click)="updateBookmark()" [disabled]="!editForm.valid">Mettre à jour</button>
+		<button class="btn" (click)="resetAddBookmark()">Annuler</button>
+	</div>
+</form>
